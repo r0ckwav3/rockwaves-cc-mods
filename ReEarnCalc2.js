@@ -74,7 +74,9 @@ Game.registerMod("ReEarnCalc2", new function(){
       var tempdesc = this.baseDesc + '<div class="line"></div>';
       if(me.reearnlist){
         for(let p in me.reearnlist){
-            tempdesc += me.reearnlist[p][1].name + ': ' + Game.sayTime(me.reearnlist[p][0]*Game.fps,-1) + '<br>';
+            if(me.reearnlist[p][1].amount>0){
+                tempdesc += me.reearnlist[p][1].name + ': ' + Game.sayTime(me.reearnlist[p][0]*Game.fps,-1) + '<br>';
+            }
         }
       }
 			return tempdesc;
