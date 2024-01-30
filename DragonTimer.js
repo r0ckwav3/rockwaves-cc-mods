@@ -92,50 +92,61 @@
 // var me=Game.UpgradesInStore[i];
 // var str=Game.crate(me,'store','Game.UpgradesById['+me.id+'].click(event);','upgrade'+i);
 
-OldToggleSpecialMenu = Game.ToggleSpecialMenu;
-Game.ToggleSpecialMenu = function(on){
-  OldToggleSpecialMenu(on);
-  if (on){
-    if (Game.specialTab=='dragon'){
-      if(Game.Upgrades['Pet the dragon'].bought){
-        var str = l('specialPopup').innerHTML;
+Game.registerMod("DragonTimer", new function(){
+  this.init = function(){
+    OldToggleSpecialMenu = Game.ToggleSpecialMenu;
+    Game.ToggleSpecialMenu = function(on){
+      OldToggleSpecialMenu(on);
+      if (on){
+        if (Game.specialTab=='dragon'){
+          if(Game.Upgrades['Pet the dragon'].bought){
+            var str = l('specialPopup').innerHTML;
 
-        // calculate the current dragon treasure
-        Math.seedrandom(Game.seed+'/dragonTime');
-        var drops=['Dragon scale','Dragon claw','Dragon fang','Dragon teddy bear'];
-        drops=shuffle(drops);
-        var drop=drops[Math.floor((new Date().getMinutes()/60)*drops.length)];
-        Math.seedrandom();
+            // calculate the current dragon treasure
+            Math.seedrandom(Game.seed+'/dragonTime');
+            var drops=['Dragon scale','Dragon claw','Dragon fang','Dragon teddy bear'];
+            drops=shuffle(drops);
+            var drop=drops[Math.floor((new Date().getMinutes()/60)*drops.length)];
+            Math.seedrandom();
 
-        // make the tooltip
-        var tooltipstr = '<div style="min-width:200px;text-align:center;" id="tooltipDragonTimer">'+'<h4>'+Game.Upgrades[drop].dname+'</h4><div class="line"></div>';
-        for (var i in drops){
-          if (Game.Has(drops[i]) || Game.HasUnlocked(drops[i])){
-            tooltipstr += drops[i] + " : unlocked";
-          }else{
-            // All of this arithmetic is done in seconds
-            var timeuntil = ((i*(3600/drops.length) - Date.now()/1000)%3600) + 3600;
-            if(timeuntil > 2700){
-              tooltipstr += drops[i] + " : available";
-            }else{
-              tooltipstr += drops[i] + " : " + Game.sayTime(timeuntil*Game.fps,-1);
+            // make the tooltip
+            var tooltipstr = '<div style="min-width:200px;text-align:center;" id="tooltipDragonTimer">'+'<h4>'+Game.Upgrades[drop].dname+'</h4><div class="line"></div>';
+            for (var i in drops){
+              if (Game.Has(drops[i]) || Game.HasUnlocked(drops[i])){
+                tooltipstr += drops[i] + " : unlocked";
+              }else{
+                // All of this arithmetic is done in seconds
+                var timeuntil = ((i*(3600/drops.length) - Date.now()/1000)%3600) + 3600;
+                if(timeuntil > 2700){
+                  tooltipstr += drops[i] + " : available";
+                }else{
+                  tooltipstr += drops[i] + " : " + Game.sayTime(timeuntil*Game.fps,-1);
+                }
+              }
+              tooltipstr += "<br></br>";
             }
+            tooltipstr+="</div>";
+
+
+            var icon = Game.Upgrades[drop].icon;
+            str+='<div class="crate enabled" style="opacity:1;position:absolute;right:142px;top:-58px;'
+                +writeIcon(icon)+'"'+Game.getTooltip(tooltipstr,'top')+'></div>';
+
+              //+Game.clickStr+'="PlaySound(\'snd/tick.mp3\');Game.SelectDragonAura(1);" '+Game.getTooltip(
+              // '<div style="min-width:200px;text-align:center;" id="tooltipDragonAuraSelect2"><h4>'+Game.dragonAuras[Game.dragonAura2].dname+'</h4>'+
+              // '<div class="line"></div>'+Game.dragonAuras[Game.dragonAura2].desc+'</div>','top')+'></div>';
+
+            l('specialPopup').innerHTML = str;
           }
-          tooltipstr += "<br></br>";
         }
-        tooltipstr+="</div>";
-
-
-        var icon = Game.Upgrades[drop].icon;
-        str+='<div class="crate enabled" style="opacity:1;position:absolute;right:142px;top:-58px;'
-             +writeIcon(icon)+'"'+Game.getTooltip(tooltipstr,'top')+'></div>';
-
-          //+Game.clickStr+'="PlaySound(\'snd/tick.mp3\');Game.SelectDragonAura(1);" '+Game.getTooltip(
-          // '<div style="min-width:200px;text-align:center;" id="tooltipDragonAuraSelect2"><h4>'+Game.dragonAuras[Game.dragonAura2].dname+'</h4>'+
-          // '<div class="line"></div>'+Game.dragonAuras[Game.dragonAura2].desc+'</div>','top')+'></div>';
-
-        l('specialPopup').innerHTML = str;
       }
     }
   }
-}
+  this.save = function(){
+    return '';
+  };
+  this.load = function(_str){
+    return;
+  };
+  return this;
+});
