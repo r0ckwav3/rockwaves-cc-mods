@@ -61,10 +61,24 @@ Game.registerMod("GardenRevealed", new function(){
     // how should the preview seeds look and act
     style_node.innerHTML +=
       ".gardenSeed.preview{filter:grayscale(100%) contrast(0.8);} "+
-      ".gardenSeed.preview:hover .gardenSeedIcon,.gardenSeed.preview:active .gardenSeedIcon{ animation:none; } "
+      ".gardenSeed.preview:hover .gardenSeedIcon,.gardenSeed.preview:active .gardenSeedIcon{ animation:none; } ";
     // make space for the added seeds
     style_node.innerHTML +=
-      "#gardenContent{height: 400px;} "
+      "#gardenContent{height: 400px;} ";
+
+    // update the lock and unlock functions
+    oldunlock = M.unlockSeed;
+    oldlock = M.lockSeed;
+    M.unlockSeed = function(me){
+      let previewl = l("gardenSeedPreview-"+me.id);
+      if(previewl){previewl.classList.add("locked");}
+      oldunlock(me);
+    }
+    M.lockSeed = function(me){
+      let previewl = l("gardenSeedPreview-"+me.id);
+      if(previewl){previewl.classList.remove("locked");}
+      oldlock(me);
+    }
   };
   this.save = function(){
     return '';
