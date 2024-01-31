@@ -81,11 +81,17 @@ Game.registerMod("GardenRevealed", new function(){
   };
   G.getMutationDescription = function(me){
     let mymutations = G.getMutationTable().filter((mut) => mut.output == me.key);
-    out = '<div class="description">';
+    var out = '<div class="description">';
     out += '<div style="margin:6px 0px;"><b>Mutates From:</b></div>';
     out += mymutations.map((mut) => {
-      return "&bull " + M.plants[mut.inputs[0].name].name;
-    }).reduce((a,b,_i,_a) => a+b, "");
+      return "&bull; " +
+      mut.inputs.map((inp) => {
+        var it = M.plants[inp.name];
+        return '<div class="gardenSeedTiny" style="background-position:'+(-0*48)+'px '+(-it.icon*48)+'px;"></div>'+
+          '<b> x '+inp.count+'</b>';
+      }).join(", ") +
+      " - " + mut.chance
+    }).join("<br></br>");
     out += '</div>';
     return out
   };
