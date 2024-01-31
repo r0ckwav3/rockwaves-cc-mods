@@ -1,16 +1,20 @@
 # rockwaves-cc-mods
 
-A bunch of random mods I've made for the browser version of cookie clicker. All of these have been tested on version `2.052`.
+A bunch of random mods I've made for the browser version of cookie clicker. All of these have been tested on version `2.052`. I generally try to keep my mods looking "vanilla," and use a lot of assets from the base game.
 
 ## Installation
 
-The best way to use these mods are to create a bookmark in your browser with the following urls:
+The best way to use these mods are to create a bookmark in your browser with one of the following:
 ```javascript
 javascript: Game.LoadMod('https://r0ckwav3.github.io/rockwaves-cc-mods/ReEarnCalc.js');
 javascript: Game.LoadMod('https://r0ckwav3.github.io/rockwaves-cc-mods/ReEarnCalc2.js');
 javascript: Game.LoadMod('https://r0ckwav3.github.io/rockwaves-cc-mods/ConjureCalc.js');
 javascript: Game.LoadMod('https://r0ckwav3.github.io/rockwaves-cc-mods/DragonTimer.js');
 javascript: Game.LoadMod('https://r0ckwav3.github.io/rockwaves-cc-mods/GardenRevealed.js');
+```
+If you want to run all of them, use this bookmark instead: (not including ReEarnCalc since ReEarnCalc2 does strictly more)
+```javascript
+javascript: Game.LoadMod('https://r0ckwav3.github.io/rockwaves-cc-mods/ReEarnCalc2.js'); Game.LoadMod('https://r0ckwav3.github.io/rockwaves-cc-mods/ConjureCalc.js'); Game.LoadMod('https://r0ckwav3.github.io/rockwaves-cc-mods/DragonTimer.js'); Game.LoadMod('https://r0ckwav3.github.io/rockwaves-cc-mods/GardenRevealed.js');
 ```
 
 ## The Mods
