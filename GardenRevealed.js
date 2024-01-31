@@ -62,8 +62,6 @@ Game.registerMod("GardenRevealed", new function(){
     }
   };
   G.seedPreviewTooltip = function(id){
-    // TODO: potentially replace the getPlantDesc with a list of ways to grow it.
-    // However, the mutation table is currently hardcoded, so I would have to hardcode this as well
 		return function(){
 			var me=M.plantsById[id];
 			var str =
